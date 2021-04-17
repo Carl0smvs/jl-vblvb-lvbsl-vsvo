@@ -6,7 +6,7 @@
 // p5.js reference: https://p5js.org/reference/
 
 // Database (CHANGE THESE!)
-const GROUP_NUMBER   = 0;      // Add your group number here as an integer (e.g., 2, 3)
+const GROUP_NUMBER   = 41;      // Add your group number here as an integer (e.g., 2, 3)
 const BAKE_OFF_DAY   = false;  // Set to 'true' before sharing during the simulation and bake-off days
 
 // Target and grid properties (DO NOT CHANGE!)
@@ -92,7 +92,18 @@ function printAndSavePerformance()
   text("Total time taken: " + test_time + "s", width/2, 160);
   text("Average time per target: " + time_per_target + "s", width/2, 180);
   text("Average time for each target (+ penalty): " + target_w_penalty + "s", width/2, 220);
-  
+
+  for(let i = 0; i < trials.length; i++)
+  {
+    if (i < 24)
+    {
+      text("Target " + (i + 1) + ": " + fitts_IDs[i], width/4, 300 + i*20)
+    }
+    else
+    {
+      text("Target " + (i + 1) + ": " + fitts_IDs[i], width* 3/4, 300 + (i - 24)*20)
+    }
+  }
   // Print Fitts IDS (one per target, -1 if failed selection)
   // 
 
@@ -136,13 +147,30 @@ function mousePressed()
   if (draw_targets)
   {
     // Get the location and size of the target the user should be trying to select
-    let target = getTargetBounds(trials[current_trial]);   
+    let target = getTargetBounds(trials[current_trial]);
+
     
     // Check to see if the mouse cursor is inside the target bounds,
     // increasing either the 'hits' or 'misses' counters
-    if (dist(target.x, target.y, mouseX, mouseY) < target.w/2)  hits++;                                                       
-    else misses++;
-    
+    if (dist(target.x, target.y, mouseX, mouseY) < target.w/2)
+    {
+      hits++;
+      //Calculate ID for every target beyond the first one
+      if (current_trial > 0)
+      {
+        let previousTarget = getTargetBounds(trials[current_trial - 1]);
+        let distance = dist(target.x, target.y, previousTarget.x, previousTarget.y); //change here if needed
+        fitts_IDs[current_trial] = Math.log2(distance/target.w + 1);
+      }
+      else
+        fitts_IDs[current_trial] = 0;
+    }
+    else
+    { //If it misses
+      misses++;
+      fitts_IDs[current_trial] = -1;
+    }
+
     current_trial++;                 // Move on to the next trial/target
     
     // Check if the user has completed all 48 trials
