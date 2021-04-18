@@ -223,9 +223,9 @@ function drawTarget(i)
     {
       let nextTarget = getTargetBounds(trials[current_trial + 1])
 
+      line(target.x, target.y, nextTarget.x, nextTarget.y)
       stroke(color(255,255,255));
       strokeWeight(5);
-      line(target.x, target.y, nextTarget.x, nextTarget.y)
     }
     // Remember you are allowed to access targets (i-1) and (i+1)
     // if this is the target the user should be trying to select
