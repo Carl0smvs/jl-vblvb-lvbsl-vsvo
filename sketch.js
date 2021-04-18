@@ -97,11 +97,27 @@ function printAndSavePerformance()
   {
     if (i < 24)
     {
-      text("Target " + (i + 1) + ": " + fitts_IDs[i], width/4, 300 + i*20)
+      if(fitts_IDs[i] === 0 && i === 0) {
+        text("Target " + (i + 1) + ": ---", width/4, 300 + i*20)
+      }
+      else if(fitts_IDs[i] === -1)
+      {
+        text("Target " + (i + 1) + ": MISS" , width/4, 300 + i*20)
+      }
+      else
+      {
+        text("Target " + (i + 1) + ": " + fitts_IDs[i], width/4, 300 + i*20)
+      }
     }
     else
     {
-      text("Target " + (i + 1) + ": " + fitts_IDs[i], width* 3/4, 300 + (i - 24)*20)
+      if (fitts_IDs[i] === -1)
+      {
+        text("Target " + (i + 1) + ": MISS", width* 3/4, 300 + (i - 24)*20)
+      }
+      else {
+        text("Target " + (i + 1) + ": " + fitts_IDs[i], width * 3 / 4, 300 + (i - 24) * 20)
+      }
     }
   }
   // Print Fitts IDS (one per target, -1 if failed selection)
