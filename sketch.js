@@ -219,8 +219,8 @@ function drawTarget(i)
   { 
     // Highlights the target the user should be trying to select
     // with a white border
-    stroke(color(220,220,220));
-    strokeWeight(2);
+    stroke(color(255,255,255));
+    strokeWeight(5);
     
     // Remember you are allowed to access targets (i-1) and (i+1)
     // if this is the target the user should be trying to select
