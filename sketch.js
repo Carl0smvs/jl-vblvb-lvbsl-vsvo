@@ -220,7 +220,7 @@ function drawTarget(i)
     // Highlights the target the user should be trying to select
     // with a white border
     stroke(color(255,255,255));
-    strokeWeight(40);
+    strokeWeight(10);
 
     //Lets draw a line between i and i+1 target
     //Check if the circles are the same
