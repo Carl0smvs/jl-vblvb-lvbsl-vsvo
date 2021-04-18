@@ -221,6 +221,7 @@ function drawTarget(i)
     //Check if the circles are the same
     if(!(trials[current_trial] === trials[current_trial + 1]))
     {
+      console.log("IM HEREEEUUUUUUUUUU")
       let nextTarget = getTargetBounds(trials[current_trial + 1])
 
       line(target.x, target.y, nextTarget.x, nextTarget.y)
