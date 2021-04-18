@@ -221,7 +221,17 @@ function drawTarget(i)
     // with a white border
     stroke(color(255,255,255));
     strokeWeight(40);
-    
+
+    //Lets draw a line between i and i+1 target
+    //Check if the circles are the same
+    if(!trials[current_trial] === trials[current_trial + 1])
+    {
+      let nextTarget = getTargetBounds(trials[current_trial + 1])
+
+      stroke(color(255,255,255));
+      strokeWeight(5);
+      line(target.x, target.y, nextTarget.x, nextTarget.y)
+    }
     // Remember you are allowed to access targets (i-1) and (i+1)
     // if this is the target the user should be trying to select
     //
