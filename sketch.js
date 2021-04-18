@@ -226,11 +226,11 @@ function drawTarget(i)
     //Check if the circles are the same
     if(!trials[current_trial] === trials[current_trial + 1])
     {
-      let nextTarget = getTargetBounds(trials[current_trial + 1])
+      //let nextTarget = getTargetBounds(trials[current_trial + 1])
 
       //stroke(color(255,255,255));
       //strokeWeight(5);
-      line(target.x, target.y, nextTarget.x, nextTarget.y)
+      //line(target.x, target.y, nextTarget.x, nextTarget.y)
     }
     // Remember you are allowed to access targets (i-1) and (i+1)
     // if this is the target the user should be trying to select
