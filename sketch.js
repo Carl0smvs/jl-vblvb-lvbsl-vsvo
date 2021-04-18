@@ -221,29 +221,46 @@ function drawTarget(i)
     //Check if the circles are the same
     if(!(trials[current_trial] === trials[current_trial + 1]))
     {
-      console.log("IM HEREEEUUUUUUUUUU")
       let nextTarget = getTargetBounds(trials[current_trial + 1])
 
-      line(target.x, target.y, nextTarget.x, nextTarget.y)
       stroke(color(255,255,255));
-      strokeWeight(5);
-    }
-    // Remember you are allowed to access targets (i-1) and (i+1)
-    // if this is the target the user should be trying to select
-    //
+      strokeWeight(4);
+      line(target.x, target.y, nextTarget.x, nextTarget.y)
 
+      //forces the line to appear behind the circle
+      /*
+      fill(color(155,155,155));
+      circle(nextTarget.x, nextTarget.y, nextTarget.w);
+       */
+    }
+    //Lets draw a line between i and i-1 target
+    //Check if the circles are the same and if its not the 1st circle
+    if(current_trial > 0 && !(trials[current_trial] === trials[current_trial - 1]))
+    {
+      let previousTarget = getTargetBounds(trials[current_trial - 1])
+
+      stroke(color(169,169,169));
+      strokeWeight(2);
+      line(target.x, target.y, previousTarget.x, previousTarget.y)
+
+      //forces the line to appear behind the circle
+      /*
+      fill(color(155,155,155));
+      circle(previousTarget.x, previousTarget.y, previousTarget.w);
+       */
+    }
 
     // Highlights the target the user should be trying to select
     // with a white border
     stroke(color(255,255,255));
-    strokeWeight(4);
+    strokeWeight(6);
   }
   // Does not draw a border if this is not the target the user
   // should be trying to select
-  else noStroke();          
+  else noStroke();
 
   // Draws the target
-  fill(color(155,155,155));                 
+  fill(color(155,155,155));
   circle(target.x, target.y, target.w);
 }
 
@@ -263,24 +280,24 @@ function continueTest()
   shuffle(trials, true);
   current_trial = 0;
   print("trial order: " + trials);
-  
+
   // Resets performance variables
   hits = 0;
   misses = 0;
   fitts_IDs = [];
-  
+
   continue_button.remove();
-  
+
   // Shows the targets again
   draw_targets = true;
-  testStartTime = millis();  
+  testStartTime = millis();
 }
 
 // Is invoked when the canvas is resized (e.g., when we go fullscreen)
-function windowResized() 
+function windowResized()
 {
   resizeCanvas(windowWidth, windowHeight);
-    
+
   let display    = new Display({ diagonal: display_size }, window.screen);
 
   // DO NOT CHANGE THESE!
@@ -291,11 +308,11 @@ function windowResized()
   MARGIN         = 1.5 * PPCM;                         // sets the margin around the targets in cm
 
   // Sets the margin of the grid of targets to the left of the canvas (DO NOT CHANGE!)
-  LEFT_PADDING   = width/2 - TARGET_SIZE - 1.5 * TARGET_PADDING - 1.5 * MARGIN;        
-  
+  LEFT_PADDING   = width/2 - TARGET_SIZE - 1.5 * TARGET_PADDING - 1.5 * MARGIN;
+
   // Sets the margin of the grid of targets to the top of the canvas (DO NOT CHANGE!)
   TOP_PADDING    = height/2 - TARGET_SIZE - 1.5 * TARGET_PADDING - 1.5 * MARGIN;
-  
+
   // Starts drawing targets immediately after we go fullscreen
   draw_targets = true;
 }
