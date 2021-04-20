@@ -165,7 +165,8 @@ function mousePressed()
     // Get the location and size of the target the user should be trying to select
     let target = getTargetBounds(trials[current_trial]);
 
-    
+    // TODO CHECK MOUSE POSITION INSTEAD??
+
     // Check to see if the mouse cursor is inside the target bounds,
     // increasing either the 'hits' or 'misses' counters
     if (dist(target.x, target.y, mouseX, mouseY) < target.w/2)
@@ -175,7 +176,7 @@ function mousePressed()
       if (current_trial > 0)
       {
         let previousTarget = getTargetBounds(trials[current_trial - 1]);
-        let distance = dist(target.x, target.y, previousTarget.x, previousTarget.y); //change here if needed
+        let distance = dist(previousTarget.x, previousTarget.y, mouseX, mouseY); //change here if needed
         fitts_IDs[current_trial] = Math.log2(distance/target.w + 1);
       }
       else
@@ -219,6 +220,7 @@ function drawTarget(i)
   {
     //Lets draw a line between i and i+1 target
     //Check if the circles are the same
+    /*
     if(!(trials[current_trial] === trials[current_trial + 1]))
     {
       let nextTarget = getTargetBounds(trials[current_trial + 1])
@@ -228,19 +230,20 @@ function drawTarget(i)
       line(target.x, target.y, nextTarget.x, nextTarget.y)
 
       //forces the line to appear behind the circle
-      /*
+
       fill(color(155,155,155));
       circle(nextTarget.x, nextTarget.y, nextTarget.w);
-       */
+
     }
+    */
     //Lets draw a line between i and i-1 target
     //Check if the circles are the same and if its not the 1st circle
     if(current_trial > 0 && !(trials[current_trial] === trials[current_trial - 1]))
     {
       let previousTarget = getTargetBounds(trials[current_trial - 1])
 
-      stroke(color(169,169,169));
-      strokeWeight(2);
+      stroke(color(255,255,255));
+      strokeWeight(4);
       line(target.x, target.y, previousTarget.x, previousTarget.y)
 
       //forces the line to appear behind the circle
