@@ -27,6 +27,8 @@ let trials 			 = [];     // contains the order of targets that activate in the t
 let current_trial    = 0;      // the current trial number (indexes into trials array above)
 let attempt          = 0;      // users complete each test twice to account for practice (attemps 0 and 1)
 let fitts_IDs        = [];     // add the Fitts ID for each selection here (-1 when there is a miss)
+let previousMouseX;
+let previousMouseY;
 
 // Target class (position and width)
 class Target
@@ -175,8 +177,7 @@ function mousePressed()
       //Calculate ID for every target beyond the first one
       if (current_trial > 0)
       {
-        let previousTarget = getTargetBounds(trials[current_trial - 1]);
-        let distance = dist(previousTarget.x, previousTarget.y, mouseX, mouseY); //change here if needed
+        let distance = dist(target.x, target.y, previousMouseX, previousMouseY); //change here if needed
         fitts_IDs[current_trial] = Math.log2(distance/target.w + 1);
       }
       else
@@ -205,7 +206,10 @@ function mousePressed()
         continue_button.mouseReleased(continueTest);
         continue_button.position(width/2 - continue_button.size().width/2, height/2 - continue_button.size().height/2);
       }
-    } 
+    }
+    
+    previousMouseX = mouseX;
+    previousMouseY = mouseY;
   }
 }
 
