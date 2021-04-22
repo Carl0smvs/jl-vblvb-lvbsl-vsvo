@@ -220,7 +220,7 @@ function drawTarget(i)
   {
     //Lets draw a line between i and i+1 target
     //Check if the circles are the same
-    /*
+
     if(!(trials[current_trial] === trials[current_trial + 1]))
     {
       let nextTarget = getTargetBounds(trials[current_trial + 1])
@@ -228,14 +228,14 @@ function drawTarget(i)
       stroke(color(255,255,255));
       strokeWeight(4);
       line(target.x, target.y, nextTarget.x, nextTarget.y)
-
+      noStroke(); // TODO
       //forces the line to appear behind the circle
 
       fill(color(155,155,155));
       circle(nextTarget.x, nextTarget.y, nextTarget.w);
 
     }
-    */
+
     //Lets draw a line between i and i-1 target
     //Check if the circles are the same and if its not the 1st circle
     if(current_trial > 0 && !(trials[current_trial] === trials[current_trial - 1]))
@@ -245,26 +245,32 @@ function drawTarget(i)
       stroke(color(255,255,255));
       strokeWeight(4);
       line(target.x, target.y, previousTarget.x, previousTarget.y)
-
+      noStroke(); // TODO
       //forces the line to appear behind the circle
-      /*
+
       fill(color(155,155,155));
       circle(previousTarget.x, previousTarget.y, previousTarget.w);
-       */
+
     }
 
     // Highlights the target the user should be trying to select
     // with a white border
     stroke(color(255,255,255));
     strokeWeight(6);
+
+    fill(color(190,30,30));
+    circle(target.x, target.y, target.w);
+
+    noStroke();
   }
   // Does not draw a border if this is not the target the user
   // should be trying to select
-  else noStroke();
-
-  // Draws the target
-  fill(color(155,155,155));
-  circle(target.x, target.y, target.w);
+  else
+  {
+    noStroke();
+    fill(color(155,155,155));
+    circle(target.x, target.y, target.w);
+  }
 }
 
 // Returns the location and size of a given target
