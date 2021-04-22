@@ -5,6 +5,8 @@
 
 // p5.js reference: https://p5js.org/reference/
 
+//<script src="p5.sound.js"></script>
+
 // Database (CHANGE THESE!)
 const GROUP_NUMBER   = 41;      // Add your group number here as an integer (e.g., 2, 3)
 const BAKE_OFF_DAY   = false;  // Set to 'true' before sharing during the simulation and bake-off days
@@ -30,6 +32,10 @@ let fitts_IDs        = [];     // add the Fitts ID for each selection here (-1 w
 let previousMouseX;
 let previousMouseY;
 
+//Sound variables
+let hitSound;
+let missSound;
+
 // Target class (position and width)
 class Target
 {
@@ -40,10 +46,19 @@ class Target
     this.w = w;
   }
 }
+/*
+function presetup()
+{
+  hitSound = loadSound('Sounds/normal-hitnormal.wav');
+  missSound = loadSound('Sounds/baka-sound-effects.mp3');
+}
+*/
 
 // Runs once at the start
 function setup()
 {
+  hitSound = loadSound('Sounds/normal-hitnormal.wav');
+  missSound = loadSound('Sounds/baka-sound-effects.mp3');
   createCanvas(700, 500);    // window size in px before we go into fullScreen()
   frameRate(60);             // frame rate (DO NOT CHANGE!)
   
@@ -100,31 +115,28 @@ function printAndSavePerformance()
     if (i < 24)
     {
       if(fitts_IDs[i] === 0 && i === 0) {
-        text("Target " + (i + 1) + ": ---", width/4, 300 + i*20)
+        text("Target " + (i + 1) + ": ---", width * 2/5, 300 + i*20)
       }
       else if(fitts_IDs[i] === -1)
       {
-        text("Target " + (i + 1) + ": MISS" , width/4, 300 + i*20)
+        text("Target " + (i + 1) + ": MISS" , width * 2/5, 300 + i*20)
       }
       else
       {
-        text("Target " + (i + 1) + ": " + fitts_IDs[i], width/4, 300 + i*20)
+        text("Target " + (i + 1) + ": " + fitts_IDs[i], width * 2/5, 300 + i*20)
       }
     }
     else
     {
       if (fitts_IDs[i] === -1)
       {
-        text("Target " + (i + 1) + ": MISS", width* 3/4, 300 + (i - 24)*20)
+        text("Target " + (i + 1) + ": MISS", width * 3/5, 300 + (i - 24)*20)
       }
       else {
-        text("Target " + (i + 1) + ": " + fitts_IDs[i], width * 3 / 4, 300 + (i - 24) * 20)
+        text("Target " + (i + 1) + ": " + fitts_IDs[i], width * 3/5, 300 + (i - 24) * 20)
       }
     }
   }
-  // Print Fitts IDS (one per target, -1 if failed selection)
-  // 
-
   // Saves results (DO NOT CHANGE!)
   let attempt_data = 
   {
@@ -173,6 +185,8 @@ function mousePressed()
     // increasing either the 'hits' or 'misses' counters
     if (dist(target.x, target.y, mouseX, mouseY) < target.w/2)
     {
+
+      hitSound.play();
       hits++;
       //Calculate ID for every target beyond the first one
       if (current_trial > 0)
@@ -185,6 +199,7 @@ function mousePressed()
     }
     else
     { //If it misses
+      missSound.play();
       misses++;
       fitts_IDs[current_trial] = -1;
     }
