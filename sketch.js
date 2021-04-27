@@ -58,7 +58,10 @@ function presetup()
 function setup()
 {
   hitSound = loadSound('Sounds/normal-hitnormal.wav');
-  missSound = loadSound('Sounds/baka-sound-effects.mp3');
+  missSound = loadSound('Sounds/combobreak.wav');
+
+  cursor('Sounds/cursor.png', 15, 15);
+
   createCanvas(700, 500);    // window size in px before we go into fullScreen()
   frameRate(60);             // frame rate (DO NOT CHANGE!)
   
@@ -83,6 +86,8 @@ function draw()
     
     // Draw all 16 targets
 	for (var i = 0; i < 16; i++) drawTarget(i);
+
+	drawGuideLines();
   }
 }
 
@@ -115,25 +120,25 @@ function printAndSavePerformance()
     if (i < 24)
     {
       if(fitts_IDs[i] === 0 && i === 0) {
-        text("Target " + (i + 1) + ": ---", width * 2/5, 300 + i*20)
+        text("Target " + (i + 1) + ": ---", width * 1/4, 300 + i*20)
       }
       else if(fitts_IDs[i] === -1)
       {
-        text("Target " + (i + 1) + ": MISS" , width * 2/5, 300 + i*20)
+        text("Target " + (i + 1) + ": MISS" , width * 1/4, 300 + i*20)
       }
       else
       {
-        text("Target " + (i + 1) + ": " + fitts_IDs[i], width * 2/5, 300 + i*20)
+        text("Target " + (i + 1) + ": " + fitts_IDs[i], width * 1/4, 300 + i*20)
       }
     }
     else
     {
       if (fitts_IDs[i] === -1)
       {
-        text("Target " + (i + 1) + ": MISS", width * 3/5, 300 + (i - 24)*20)
+        text("Target " + (i + 1) + ": MISS", width * 3/4, 300 + (i - 24)*20)
       }
       else {
-        text("Target " + (i + 1) + ": " + fitts_IDs[i], width * 3/5, 300 + (i - 24) * 20)
+        text("Target " + (i + 1) + ": " + fitts_IDs[i], width * 3/4, 300 + (i - 24) * 20)
       }
     }
   }
@@ -186,7 +191,7 @@ function mousePressed()
     if (dist(target.x, target.y, mouseX, mouseY) < target.w/2)
     {
 
-      hitSound.play();
+      hitSound.play(0,1,0.5);
       hits++;
       //Calculate ID for every target beyond the first one
       if (current_trial > 0)
@@ -199,7 +204,7 @@ function mousePressed()
     }
     else
     { //If it misses
-      missSound.play();
+      missSound.play(0,1,0.5);
       misses++;
       fitts_IDs[current_trial] = -1;
     }
@@ -234,44 +239,10 @@ function drawTarget(i)
   // Get the location and size for target (i)
   let target = getTargetBounds(i);             
 
+  /*
   // Check whether this target is the target the user should be trying to select
   if (trials[current_trial] === i) 
   {
-    //Lets draw a line between i and i+1 target
-    //Check if the circles are the same
-
-    if(!(trials[current_trial] === trials[current_trial + 1]))
-    {
-      let nextTarget = getTargetBounds(trials[current_trial + 1])
-
-      stroke(color(255,255,255));
-      strokeWeight(4);
-      line(target.x, target.y, nextTarget.x, nextTarget.y)
-      noStroke(); // TODO
-      //forces the line to appear behind the circle
-
-      fill(color(155,155,155));
-      circle(nextTarget.x, nextTarget.y, nextTarget.w);
-
-    }
-
-    //Lets draw a line between i and i-1 target
-    //Check if the circles are the same and if its not the 1st circle
-    if(current_trial > 0 && !(trials[current_trial] === trials[current_trial - 1]))
-    {
-      let previousTarget = getTargetBounds(trials[current_trial - 1])
-
-      stroke(color(255,255,255));
-      strokeWeight(4);
-      line(target.x, target.y, previousTarget.x, previousTarget.y)
-      noStroke(); // TODO
-      //forces the line to appear behind the circle
-
-      fill(color(155,155,155));
-      circle(previousTarget.x, previousTarget.y, previousTarget.w);
-
-    }
-
     // Highlights the target the user should be trying to select
     // with a white border
     stroke(color(255,255,255));
@@ -290,6 +261,51 @@ function drawTarget(i)
     fill(color(155,155,155));
     circle(target.x, target.y, target.w);
   }
+
+   */
+  noStroke();
+  fill(color(120,120,120));
+  circle(target.x, target.y, target.w);
+
+}
+
+function drawGuideLines() {
+  let currentTarget = getTargetBounds(trials[current_trial]);
+
+  if(current_trial > 0) {
+    let previousTarget = getTargetBounds(trials[current_trial - 1]);
+
+    stroke(color(255,255,255));
+    strokeWeight(4);
+    line(currentTarget.x, currentTarget.y, previousTarget.x, previousTarget.y)
+    noStroke();
+
+    fill(color(155,155,155));
+    circle(previousTarget.x, previousTarget.y, previousTarget.w);
+
+  }
+
+  if(current_trial < 47) {
+    let nextTarget = getTargetBounds(trials[current_trial + 1]);
+
+    stroke(color(255,255,255));
+    strokeWeight(4);
+    line(currentTarget.x, currentTarget.y, nextTarget.x, nextTarget.y)
+    noStroke();
+
+
+    //fill(color(150,70,70));
+    fill(color(190,120,120));
+    circle(nextTarget.x, nextTarget.y, nextTarget.w);
+  }
+
+  stroke(color(255,255,255));
+  strokeWeight(6);
+
+  fill(color(190,30,30));
+  circle(currentTarget.x, currentTarget.y, currentTarget.w);
+
+  noStroke();
 }
 
 // Returns the location and size of a given target
