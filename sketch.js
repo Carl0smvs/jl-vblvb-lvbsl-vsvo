@@ -60,7 +60,7 @@ function setup()
   hitSound = loadSound('Sounds/normal-hitnormal.wav');
   missSound = loadSound('Sounds/combobreak.wav');
 
-  cursor('Sounds/cursor.png', 15, 15);
+  cursor('Sounds/cursor.png', 12, 12);
 
   createCanvas(700, 500);    // window size in px before we go into fullScreen()
   frameRate(60);             // frame rate (DO NOT CHANGE!)
@@ -183,8 +183,6 @@ function mousePressed()
   {
     // Get the location and size of the target the user should be trying to select
     let target = getTargetBounds(trials[current_trial]);
-
-    // TODO CHECK MOUSE POSITION INSTEAD??
 
     // Check to see if the mouse cursor is inside the target bounds,
     // increasing either the 'hits' or 'misses' counters
