@@ -46,13 +46,6 @@ class Target
     this.w = w;
   }
 }
-/*
-function presetup()
-{
-  hitSound = loadSound('Sounds/normal-hitnormal.wav');
-  missSound = loadSound('Sounds/baka-sound-effects.mp3');
-}
-*/
 
 // Runs once at the start
 function setup()
@@ -60,7 +53,7 @@ function setup()
   hitSound = loadSound('Sounds/normal-hitnormal.wav');
   missSound = loadSound('Sounds/combobreak.wav');
 
-  cursor('Sounds/cursor.png', 12, 12);
+  //cursor('Sounds/cursor.png', 12, 12);  check this later
 
   createCanvas(700, 500);    // window size in px before we go into fullScreen()
   frameRate(60);             // frame rate (DO NOT CHANGE!)
@@ -76,6 +69,7 @@ function draw()
 {
   if (draw_targets)
   {
+    cursor('Sounds/cursor.png', 12, 12);
     // The user is interacting with the 4x4 target grid
     background(color(0,0,0));        // sets background to black
     
