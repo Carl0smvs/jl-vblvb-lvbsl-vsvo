@@ -242,15 +242,12 @@ function drawGuideLines() {
 
   if(current_trial > 0) {
     let previousTarget = getTargetBounds(trials[current_trial - 1]);
+    let v0 = createVector(previousTarget.x, previousTarget.y);
+    let v1 = createVector(currentTarget.x - previousTarget.x, currentTarget.y - previousTarget.y);
 
-    stroke(color(255,255,255));
-    strokeWeight(4);
-    line(currentTarget.x, currentTarget.y, previousTarget.x, previousTarget.y)
-    noStroke();
-
+    drawArrow(v0, v1, 'white');
     fill(color(155,155,155));
     circle(previousTarget.x, previousTarget.y, previousTarget.w);
-
   }
 
   if(current_trial < 47) {
@@ -263,6 +260,7 @@ function drawGuideLines() {
 
     fill(color(198,230,245));
     circle(nextTarget.x, nextTarget.y, nextTarget.w);
+
   }
 
   fill(color(0,128,255));
@@ -288,6 +286,22 @@ function drawGuideLines() {
     noStroke();
     textSize(18);
   }
+}
+
+function drawArrow(base, vec, myColor) {
+  push();
+  stroke(myColor);
+  strokeWeight(3);
+  fill(myColor);
+  translate(base.x, base.y);
+  line(0, 0, vec.x, vec.y);
+  rotate(vec.heading());
+  let arrowSize = 20;
+  translate(vec.mag()/2 - arrowSize/2, 0);
+  fill(color(0,128,255));
+  stroke(color(0,128,255))
+  triangle(0, arrowSize / 2, 0, -arrowSize / 2, arrowSize, 0);
+  pop();
 }
 
 // Returns the location and size of a given target
