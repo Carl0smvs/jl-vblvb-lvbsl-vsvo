@@ -50,7 +50,7 @@ class Target
 // Runs once at the start
 function setup()
 {
-  hitSound = loadSound('Sounds/normal-hitnormal.wav');
+  hitSound = loadSound('Sounds/drum-hitwhistle.wav');
   missSound = loadSound('Sounds/combobreak.wav');
 
   //cursor('Sounds/cursor.png', 12, 12);  check this later
