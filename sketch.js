@@ -69,7 +69,7 @@ function draw()
 {
   if (draw_targets)
   {
-    cursor('Sounds/cursor.png', 12, 12);
+    cursor('Sounds/cursor.png', 12.5, 12.5);
     // The user is interacting with the 4x4 target grid
     background(color(0,0,0));        // sets background to black
 
@@ -265,7 +265,7 @@ function drawGuideLines() {
     circle(nextTarget.x, nextTarget.y, nextTarget.w);
   }
 
-  fill(color(0,181,255));
+  fill(color(0,128,255));
   circle(currentTarget.x, currentTarget.y, currentTarget.w);
 
   noStroke();
@@ -280,11 +280,13 @@ function drawGuideLines() {
   }
 
   if(current_trial < 47 && trials[current_trial] === trials[current_trial + 1]) {
-    stroke(color(255,255,255));
+    stroke(color(255,128,0));
     strokeWeight(2);
-    fill(0,0,0);
-    text("NEXT", currentTarget.x - textWidth("NEXT")/2, currentTarget.y);
+    fill(255,128,0);
+    textSize(21);
+    text("X2", currentTarget.x - textWidth("X2")/2, currentTarget.y+5);
     noStroke();
+    textSize(18);
   }
 }
 
