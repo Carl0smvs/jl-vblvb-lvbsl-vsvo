@@ -242,10 +242,18 @@ function drawGuideLines() {
 
   if(current_trial > 0) {
     let previousTarget = getTargetBounds(trials[current_trial - 1]);
+    /*
     let v0 = createVector(previousTarget.x, previousTarget.y);
     let v1 = createVector(currentTarget.x - previousTarget.x, currentTarget.y - previousTarget.y);
 
     drawArrow(v0, v1, 'white');
+     */
+
+    stroke(color(255,255,255));
+    strokeWeight(4);
+    line(currentTarget.x, currentTarget.y, previousTarget.x, previousTarget.y)
+    noStroke();
+
     fill(color(155,155,155));
     circle(previousTarget.x, previousTarget.y, previousTarget.w);
   }
@@ -276,6 +284,14 @@ function drawGuideLines() {
     circle(currentTarget.x, currentTarget.y, currentTarget.w + 20); //alter this if want the circle in or out
     noStroke();
   }
+  else {
+    stroke(color(255,255,255));
+    strokeWeight(4);
+    noFill();
+    circle(currentTarget.x, currentTarget.y, currentTarget.w - 20); //alter this if want the circle in or out
+    noStroke();
+  }
+
 
   if(current_trial < 47 && trials[current_trial] === trials[current_trial + 1]) {
     stroke(color(255,128,0));
