@@ -5,8 +5,6 @@
 
 // p5.js reference: https://p5js.org/reference/
 
-//<script src="p5.sound.js"></script>
-
 // Database (CHANGE THESE!)
 const GROUP_NUMBER   = 41;      // Add your group number here as an integer (e.g., 2, 3)
 const BAKE_OFF_DAY   = true;  // Set to 'true' before sharing during the simulation and bake-off days
@@ -52,8 +50,6 @@ function setup()
 {
   hitSound = loadSound('Sounds/drum-hitwhistle.wav');
   missSound = loadSound('Sounds/combobreak.wav');
-
-  //cursor('Sounds/cursor.png', 12, 12);  check this later
 
   createCanvas(700, 500);    // window size in px before we go into fullScreen()
   frameRate(60);             // frame rate (DO NOT CHANGE!)
@@ -182,9 +178,9 @@ function mousePressed()
     // increasing either the 'hits' or 'misses' counters
     if (dist(target.x, target.y, mouseX, mouseY) < target.w/2)
     {
-
       hitSound.play(0,1,0.5);
       hits++;
+
       //Calculate ID for every target beyond the first one
       if (current_trial > 0)
       {
@@ -219,7 +215,6 @@ function mousePressed()
         continue_button.position(width/2 - continue_button.size().width/2, height/2 - continue_button.size().height/2);
       }
     }
-
     previousMouseX = mouseX;
     previousMouseY = mouseY;
   }
@@ -242,13 +237,15 @@ function drawGuideLines() {
 
   if(current_trial > 0) {
     let previousTarget = getTargetBounds(trials[current_trial - 1]);
-    /*
+
+    /* DEPRECATED, HERE FOR FUTURE REFERENCE
     let v0 = createVector(previousTarget.x, previousTarget.y);
     let v1 = createVector(currentTarget.x - previousTarget.x, currentTarget.y - previousTarget.y);
 
     drawArrow(v0, v1, 'white');
      */
 
+    //Draws a guideline from the previous target to the current one
     stroke(color(255,255,255));
     strokeWeight(4);
     line(currentTarget.x, currentTarget.y, previousTarget.x, previousTarget.y)
@@ -261,6 +258,7 @@ function drawGuideLines() {
   if(current_trial < 47) {
     let nextTarget = getTargetBounds(trials[current_trial + 1]);
 
+    //Draws a guideline from the current target to the next one
     stroke(color(255,255,255));
     strokeWeight(4);
     line(currentTarget.x, currentTarget.y, nextTarget.x, nextTarget.y)
@@ -268,15 +266,16 @@ function drawGuideLines() {
 
     fill(color(198,230,245));
     circle(nextTarget.x, nextTarget.y, nextTarget.w);
-
   }
 
+  //Draws the current target on top of the lines, with the selected color
   fill(color(0,128,255));
   circle(currentTarget.x, currentTarget.y, currentTarget.w);
 
   noStroke();
 
-  //draw the current target border
+  //draw the current target border. If we are not hovering it,
+  //a marker shows inside the circle. Else, the border shows outside the target
   if(dist(currentTarget.x, currentTarget.y, mouseX, mouseY) < currentTarget.w/2) {
     stroke(color(255,255,255));
     strokeWeight(4);
@@ -292,18 +291,19 @@ function drawGuideLines() {
     noStroke();
   }
 
-
+  //Draws an indicator when there are two overlapping targets
   if(current_trial < 47 && trials[current_trial] === trials[current_trial + 1]) {
     stroke(color(255,128,0));
     strokeWeight(2);
     fill(255,128,0);
     textSize(21);
-    text("X2", currentTarget.x - textWidth("X2")/2, currentTarget.y+5);
+    text("X2", currentTarget.x - textWidth("X2")/2, currentTarget.y+8);
     noStroke();
     textSize(18);
   }
 }
 
+//Auxiliary function
 function drawArrow(base, vec, myColor) {
   push();
   stroke(myColor);
